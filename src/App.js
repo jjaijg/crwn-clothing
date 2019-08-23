@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import Header from './components/header/Header.component';
 import Homepage from './pages/homepage/Homepage.component';
@@ -24,11 +24,19 @@ class App extends Component {
 
   componentDidMount() {
     // this onAuthStateChanged is a open subscription, we need to close it once it is done
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({
-        currentUser: user
-      });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot( snapShot => {
+          console.log(snapShot.data())
+          this.setState({
+            currentUser: {id: snapShot.id,
+            ...snapShot.data()
+          }
+          })
+        })
+      } else this.setState({ currentUser: userAuth })
+      
     })
   }
 
