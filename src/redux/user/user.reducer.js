@@ -1,4 +1,5 @@
 // reducer contains details of user alone
+import {UserActionTypes} from './user.types';
 
 const INITIAL_STATE = {
     currentUser: null
@@ -8,7 +9,7 @@ const INITIAL_STATE = {
 // is prevstate is empty (null is considerded as value), it will take value from INITIAL_STATE (default arg)
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'SET_CURRENT_USER':
+        case UserActionTypes.SET_CURRENT_USER:
             return {
                 ...state,
                 currentUser: action.payload
