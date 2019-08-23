@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';
+
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import './Header.style.scss';
-
-import { auth } from '../../firebase/firebase.utils';
+import './Header.style.scss'; 
 
 let signout = () => auth.signOut();
 
@@ -26,4 +27,11 @@ const Header = ({ currentUser }) => (
     </div>
 );
 
-export default Header;
+// input root-state
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
+// Connect is a higher order function, which will take a function & compoennt
+// give extra access to the compoennt
+export default connect(mapStateToProps)(Header);
