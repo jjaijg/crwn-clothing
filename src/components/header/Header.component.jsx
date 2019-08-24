@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 
+import CartIcon from '../cart-icon/Cart-icon.component';
+import CartDropdown from '../cart-dropdown/Cart-dropdown.component';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './Header.style.scss'; 
 
 let signout = () => auth.signOut();
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
     <div className='header'>
     <Link className='logo-container' to='/'>
         <Logo className='logo' />
@@ -23,13 +25,22 @@ const Header = ({ currentUser }) => (
         :
         <Link className='option' to='/signin'>SIGN IN</Link>
     }
+    <CartIcon />
+    
     </div>
+    {
+        hidden 
+        ? null 
+        : <CartDropdown />
+    }
+    
     </div>
 );
 
 // input root-state
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+const mapStateToProps = ({ user: {currentUser}, cart: {hidden} }) => ({
+    currentUser,
+    hidden
 })
 
 // Connect is a higher order function, which will take a function & compoennt
