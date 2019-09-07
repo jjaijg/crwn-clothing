@@ -39,6 +39,10 @@ const CheckoutPage = ({ cartItems, total }) => (
     <div className="total">
       <span>TOTAL: ${total}</span>
     </div>
+    <div className="test-data">
+      Test Data for using payment: Card No: 4242-4242-4242-4242; Exp date:
+      01/20; CVV: 123
+    </div>
     <StripeCheckoutButton price={total} />
   </div>
 );
