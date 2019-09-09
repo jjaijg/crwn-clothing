@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
@@ -30,7 +28,9 @@ class App extends Component {
         userRef.onSnapshot(snapShot => {
           setCurrentUser({ id: snapShot.id, ...snapShot.data() });
         });
-      } else setCurrentUser(userAuth);
+      } else {
+        setCurrentUser(userAuth);
+      }
     });
   }
 
