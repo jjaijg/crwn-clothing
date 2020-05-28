@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -14,7 +14,7 @@ import {
   HeaderContainer,
   LogoContainer,
   OptionsContainer,
-  OptionLink
+  OptionLink,
 } from "./Header.styles";
 
 let signout = () => auth.signOut();
@@ -46,7 +46,7 @@ const Header = ({ currentUser, hidden }) => (
 // -> and state will be automatically passed to selectors by CSS
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  hidden: selectCartHidden
+  hidden: selectCartHidden,
 });
 
 // Connect is a higher order function, which will take a function & compoennt
