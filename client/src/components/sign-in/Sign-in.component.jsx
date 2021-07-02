@@ -10,23 +10,23 @@ import {
   emailSignInStart,
 } from '../../redux/user/user.actions';
 
-const SignIn = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { googleSignInStart } = props;
+const SignIn = ({ googleSignInStart, emailSignInStart }) => {
+  const [userCredentials, setUserCredentials] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = userCredentials;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { emailSignInStart } = props;
 
     emailSignInStart(email, password);
-
-    // try {
-    //   await auth.signInWithEmailAndPassword(email, password);
-    //   setState({ email: '', password: '' });
-    // } catch (error) {
-    //   console.log('Error in signin, ', error);
-    // }
   };
 
   return (
@@ -40,7 +40,7 @@ const SignIn = (props) => {
           type='email'
           label='Email'
           value={email}
-          handleChange={(e) => setEmail(e.target.value)}
+          handleChange={handleChange}
           required
         />
         <FormInput
@@ -48,7 +48,7 @@ const SignIn = (props) => {
           type='password'
           label='Password'
           value={password}
-          handleChange={(e) => setPassword(e.target.value)}
+          handleChange={handleChange}
           required
         />
         <div className='buttons'>
